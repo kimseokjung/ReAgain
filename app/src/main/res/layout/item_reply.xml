@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PostActivity">
+
+    <RelativeLayout
+        android:id="@+id/top_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/reply_profile"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/unimg"
+            android:layout_marginTop="12dp"
+            />
+
+        <TextView
+            android:id="@+id/reply_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/reply_profile"
+            android:layout_toLeftOf="@+id/delete_img"
+            android:ellipsize="end"
+            android:layout_margin="10dp"
+            android:padding="0dp"
+            android:text="내용 : 이것은 내용이다 왜냐하면 내용이라서 그렇다 그리고 이것은 끝이 흐려지는지를 위한 테스트이다"
+            android:textSize="16sp"/>
+
+        <ImageView
+            android:id="@+id/delete_img"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/trash"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="15dp"
+            android:visibility="invisible"/>
+    </RelativeLayout>
+
+</RelativeLayout>

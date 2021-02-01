@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileModiActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_centerInParent="true">
+
+
+        <TextView
+            android:id="@+id/modify_ed_id"
+            android:layout_marginTop="5dp"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:background="#FFFAAE"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:hint="ID"
+            android:textSize="18dp"
+            android:paddingLeft="5dp" />
+
+
+        <EditText
+            android:id="@+id/modify_ed_pw"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/modify_ed_id"
+            android:background="#FFFAAE"
+            android:layout_marginTop="5dp"
+            android:singleLine="true"
+            android:hint="PASSWORD"
+            android:textSize="18dp"
+            android:paddingLeft="5dp"
+            android:layout_marginLeft="5dp"
+            android:inputType="textPassword"/>
+
+
+        <EditText
+            android:id="@+id/modify_ed_pw2"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/modify_ed_pw"
+            android:background="#FFFAAE"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:singleLine="true"
+            android:hint="CHECK PASSWORD"
+            android:textSize="18dp"
+            android:paddingLeft="5dp"
+            android:inputType="textPassword"/>
+
+        <TextView
+            android:id="@+id/chk_pw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_below="@+id/modify_ed_pw2"
+            android:text=" sdasdasd"
+            android:textSize="15sp"
+            android:textColor="#8ECF42"
+            android:layout_marginLeft="5dp"
+            android:visibility="gone"
+            />
+
+        <EditText
+            android:id="@+id/modify_ed_name"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/chk_pw"
+            android:background="#FFFAAE"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:singleLine="true"
+            android:hint="NAME"
+            android:textSize="18dp"
+            android:paddingLeft="5dp"/>
+
+        <EditText
+            android:id="@+id/modify_ed_email"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/modify_ed_name"
+            android:background="#FFFAAE"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:singleLine="true"
+            android:hint="E-MAIL"
+            android:textSize="18dp"
+            android:paddingLeft="5dp"/>
+
+
+        <EditText
+            android:id="@+id/modify_ed_add"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/modify_ed_email"
+            android:background="#FFFAAE"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:singleLine="true"
+            android:hint="ADD"
+            android:textSize="20dp"
+            android:paddingLeft="5dp"/>
+
+
+        <RadioGroup
+            android:id="@+id/radio_chk"
+            android:layout_below="@+id/modify_ed_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:id="@+id/radio_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="user"
+                android:textSize="18sp" />
+            <RadioButton
+                android:id="@+id/radio_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="product"
+                android:textSize="18sp"/>
+
+        </RadioGroup>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radio_chk"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/btn_modify_ok"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="수 정"
+                android:textSize="20sp"/>
+
+            <Button
+                android:id="@+id/btn_modify_fail"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/btn_modify_ok"
+                android:text="취 소"
+                android:textSize="20sp"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/pw_chk_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:background="#ffffff"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="현재 비밀번호를 입력해주세요"
+            android:textColor="#000000"
+            android:layout_marginBottom="10dp"
+            android:textSize="16dp"
+            android:textStyle="bold"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_now"
+            android:layout_alignLeft="@+id/tv_now"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/now_pwd"
+                android:layout_width="150dp"
+                android:layout_height="35dp"
+                android:background="#FFFAAE"
+
+                android:hint="PASSWORD"
+                android:inputType="textPassword"
+                android:paddingLeft="5dp"
+                android:singleLine="true"
+                android:textSize="18dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_now_pwd"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_now_pwd"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:text="확 인"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/now_pwd"
+                app:layout_constraintStart_toEndOf="@+id/now_pwd"
+                app:layout_constraintTop_toTopOf="@+id/now_pwd" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

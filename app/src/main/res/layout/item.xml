@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BoardActivity">
+
+    <RelativeLayout
+        android:id="@+id/top_main"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/board_profile"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/unimg" />
+
+<!--        <TextView
+            android:id="@+id/board_profile"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:text="프"
+            android:gravity="center"
+            android:background="#94F3FF"
+            android:textSize="20sp" />-->
+        <TextView
+            android:id="@+id/board_writer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/board_profile"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:text="작성자"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+        <ImageView
+            android:id="@+id/board_dots"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/dots"
+            android:layout_marginRight="15dp"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/border1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/top_main"
+        android:background="#dfdfdf"/>
+
+    <ImageView
+        android:id="@+id/board_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/border1"/>
+
+
+    <RelativeLayout
+        android:id="@+id/top_main2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:layout_below="@id/board_img">
+
+        <ImageView
+            android:id="@+id/board_like"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/heart_far"
+            android:layout_marginLeft="15dp"
+            android:gravity="center"/>
+        <ImageView
+            android:id="@+id/board_reply"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/speech_bubble"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/board_like"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/board_logtime"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:text="날짜"
+            android:textSize="15sp"
+            android:textColor="#888888"/>
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/border2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/top_main2"
+        android:background="#dfdfdf"/>
+    <TextView
+        android:id="@+id/board_like_count"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_below="@+id/border2"
+        android:gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:text="누군가가 당신을 %%만큼 좋아요를 눌렀대"
+        android:textSize="15sp"
+        android:textColor="#888888"/>
+
+    <TextView
+        android:id="@+id/board_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/board_like_count"
+        android:ellipsize="end"
+        android:padding="10dp"
+        android:text="내용 : 이것은 내용이다 왜냐하면 내용이라서 그렇다 그리고 이것은 끝이 흐려지는지를 위한 테스트이다"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/reply_prv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/board_content"
+        android:padding="3dp"
+        android:layout_marginLeft="7dp"
+        android:text="이거슨 댓글1번"
+        android:textSize="14sp"
+        android:textColor="#888888"/>
+    <TextView
+        android:id="@+id/reply_prv2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/reply_prv1"
+        android:layout_marginLeft="7dp"
+        android:padding="3dp"
+        android:text="이거슨 댓글2번"
+        android:textSize="14sp"
+        android:textColor="#888888" />
+    <TextView
+        android:layout_weight="1"
+        android:id="@+id/reply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/reply_prv2"
+        android:padding="10dp"
+        android:text="댓글 더 보기 ..."
+        android:textSize="16sp"
+        android:textColor="#888888"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/border3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/reply"
+        android:background="#dfdfdf"
+        android:layout_marginBottom="20dp"/>
+
+</RelativeLayout>

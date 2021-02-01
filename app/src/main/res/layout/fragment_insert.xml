@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InsertFragment"
+    android:background="#ffffff"
+    >
+
+    <RelativeLayout
+        android:id="@+id/top_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
+        <RelativeLayout
+            android:id="@+id/top_camera"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:background="#F1F1F1"
+            android:layout_below="@+id/border1">
+
+            <ImageView
+                android:id="@+id/insert_camera"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_camera"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+
+            <ImageView
+                android:id="@+id/insert_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+
+
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/border1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/haeder"
+            android:background="#9C979797"
+            />
+        <LinearLayout
+            android:id="@+id/ed_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/border2"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/insert_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:hint="여기에 입력해 주세요"
+                android:padding="15dp"
+                android:gravity="top"
+                android:textSize="15dp"
+                android:background="@null"
+                />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/haeder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="#ffffff">
+
+            <ImageView
+                android:id="@+id/insert_btn_c"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_x"
+                android:layout_centerVertical="true"
+                />
+            <Button
+                android:id="@+id/insert_btn"
+                android:layout_width="55dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="완 료"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:padding="0dp"
+                />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/border2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/top_camera"
+            android:background="#9C979797"
+            />
+
+
+    </RelativeLayout>
+
+</FrameLayout>

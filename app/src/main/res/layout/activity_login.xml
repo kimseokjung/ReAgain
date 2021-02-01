@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:background="#FAFAFA">
+
+    <!--
+        부모와 관계로 정렬
+        android:layout_alignTop="true"
+        android:layout_alignBottom="true"
+        android:layout_alignRight="true"
+        android:layout_alignLeft="true"
+
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+
+        다른 뷰와 관계로 정렬
+        android:layout_above="@+id/아이디" 누구의 위
+        android:layout_below="@+id/아이디" 누구의 아래
+        android:layout_toLeftOf="@+id/아이디" 누구의 왼쪽
+        android:layout_toRightOf="@+id/아이디" 누구의 오른쪽
+
+
+        대상의 상하좌우 줄과 나의 상하좌우 줄 정렬
+        android:layout_alignTop="@+id/아이디" 누구의 윗줄과 나의 윗줄 정렬
+        android:layout_alignBottom="@+id/아이디"
+        android:layout_alignLeft="@+id/아이디"
+        android:layout_alignRight="@+id/아이디"
+    -->
+
+    <RelativeLayout
+        android:id="@+id/center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="#ffffff"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/user_id"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="I D"
+            android:textSize="20sp"
+            android:background="#F3F3F3" />
+
+        <TextView
+            android:id="@+id/user_pw"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_id"
+            android:gravity="center"
+            android:text="PW"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:background="#F3F3F3" />
+
+        <EditText
+            android:id="@+id/ed_id"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/user_id"
+            android:layout_alignBottom="@id/user_id"
+            android:layout_toRightOf="@id/user_id"
+            android:layout_marginLeft="5dp"
+            android:background="#FFFFF2"
+            android:singleLine="true"/>
+
+        <EditText
+            android:id="@+id/ed_pw"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ed_id"
+            android:layout_alignTop="@id/user_pw"
+            android:layout_alignBottom="@id/user_pw"
+            android:layout_toRightOf="@id/user_pw"
+            android:layout_marginLeft="5dp"
+            android:background="#FFFFF2"
+            android:singleLine="true"
+            android:inputType="textPassword"/>
+        <CheckBox
+            android:id="@+id/auto_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ed_pw"
+            android:layout_marginTop="10dp"
+            android:text="자동 로그인"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/auto_login"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="5dp">
+
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:text="로그인" />
+
+            <Button
+                android:id="@+id/btn_join"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/btn_login"
+                android:text="회원가입" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
