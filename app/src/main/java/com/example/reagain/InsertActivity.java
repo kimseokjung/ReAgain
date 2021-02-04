@@ -77,7 +77,7 @@ public class InsertActivity extends BaseActivity implements View.OnClickListener
     ImageView imageView;
     ImageView backImg;
     ImageView insertCamera;
-    Button submitBtn;
+    Button submitBtn, modifyOK, modifyFail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +89,8 @@ public class InsertActivity extends BaseActivity implements View.OnClickListener
         backImg = findViewById(R.id.insert_btn_c);
         insertCamera = findViewById(R.id.insert_camera);
         submitBtn = findViewById(R.id.insert_btn);
+        modifyOK = findViewById(R.id.btn_modify_ok);
+        modifyFail = findViewById(R.id.btn_modify_fail);
 
         insertCamera.bringToFront();
         userId = getData("userid");
@@ -103,6 +105,13 @@ public class InsertActivity extends BaseActivity implements View.OnClickListener
         submitBtn.setOnClickListener(this);
         backImg.setOnClickListener(this);
 
+        TedPermission.with(this.getApplicationContext())
+                .setPermissionListener(permissionListener)
+                .setRationaleMessage("카메라 권한이 필요합니다.")
+                .setDeniedMessage("거부하셨습니다.")
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.CAMERA)
+                .check();
 
     }
     String isAA = ""; // okhttp통신 후 값을 받을 공간
@@ -186,7 +195,7 @@ public class InsertActivity extends BaseActivity implements View.OnClickListener
                     }
                 }
             });
-            builer.setNegativeButton("삭제", new DialogInterface.OnClickListener() {
+            builer.setNegativeButton("취소", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
@@ -332,8 +341,14 @@ public class InsertActivity extends BaseActivity implements View.OnClickListener
 
                 // 선택한 이미지 임시 저장
                 String date = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                String strFolderName = Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES) + File.separator + "EZENSTA" + File.separator;
+               // String strFolderName = Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES) + File.separator + "EZENSTA" + File.separator;
+                String strFolderName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "EZENSTA" + File.separator;
+                File file = new File(strFolderName);
+                if(!file.exists()){
+                    file.mkdirs();
+                }
                 tempFile = new File(strFolderName, "TEST_" + date + ".jpeg");
+                Log.d("imgUri" ,""+tempFile);
                 OutputStream out = new FileOutputStream(tempFile);
                 img.compress(Bitmap.CompressFormat.JPEG, 100, out);
 

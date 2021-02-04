@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".ReplyActivity">
+
+    <RelativeLayout
+        android:id="@+id/top_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/board_profile"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/unimg"
+            android:layout_centerVertical="true"
+            android:layout_alignTop="@+id/board_content"/>
+
+            <TextView
+                android:id="@+id/board_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/board_profile"
+                android:layout_margin="10dp"
+                android:padding="0dp"
+                android:text="내용 : 이것은 내용이다 왜냐하면 내용이라서 그렇다 그리고 이것은 끝이 흐려지는지를 위한 테스트이다"
+                android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/border1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/top_main"
+        android:background="#dfdfdf"/>
+
+    <ListView
+        android:id="@+id/reply_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top_main"
+        android:layout_above="@+id/btm_edt"
+        android:dividerHeight="0dp"
+        android:divider="#ffffff"/>
+
+    <RelativeLayout
+        android:id="@+id/btm_edt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <EditText
+            android:id="@+id/reply_ed"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_toLeftOf="@+id/reply_btn"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:hint="댓글을 입력해주세요"
+            android:textSize="16dp"
+            android:layout_centerVertical="true"/>
+
+        <Button
+            android:id="@+id/reply_btn"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_centerVertical="true"
+            android:text="확 인"
+            android:padding="0dp"
+            android:textSize="16dp"
+            android:textStyle="bold"/>
+
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

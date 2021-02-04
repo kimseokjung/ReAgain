@@ -55,6 +55,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             autoLogin.setChecked(true);
         }else {
             autoLogin.setChecked(false);
+            deletePref();
         }
 
         if(autoLogin.isChecked()) {
@@ -160,14 +161,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             showToast("로그인 성공!!");
             if(autoLogin.isChecked()){
                 isAutoLogin = "1";
-                savePref("autoLogin",isAutoLogin);
-                savePref("userid", edId.getText().toString().trim());
-                savePref("profileImg", profileImg);
-                savePref("pwd", edPw.getText().toString().trim());
             }else {
                 isAutoLogin = "0";
-
             }
+            savePref("autoLogin",isAutoLogin);
+            savePref("userid", edId.getText().toString().trim());
+            savePref("profileImg", profileImg);
+            savePref("pwd", edPw.getText().toString().trim());
             Log.d("aa","Login!!!!!");
             Intent intent =
                     new Intent(LoginActivity.this, com.example.reagain.MainActivity.class);

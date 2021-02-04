@@ -210,28 +210,6 @@ public class JoinActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
-    /* JSON 예제 */
-    private void jsonTest() {
-
-        try {
-            JSONObject jsonObject1 = new JSONObject();
-            jsonObject1.put("name", "홍길동");
-            jsonObject1.put("gender", "M");
-
-            JSONArray jsonArr = new JSONArray();
-            jsonArr.put(jsonObject1);
-
-
-            for (int i = 0; i < jsonArr.length(); i++) {
-                JSONObject temp = jsonArr.getJSONObject(i);
-                String temoName = temp.getString("name");
-                String temoGender = temp.getString("gender");
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
     private boolean isValid() {
         boolean isValid = true;
         if (joinEdId.getText().toString().trim().length() < 1) {

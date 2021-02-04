@@ -298,7 +298,7 @@ public class BoardActivity extends BaseActivity implements AdapterView.OnItemCli
             viewHolder.tvBoardReply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(BoardActivity.this, com.example.reagain.PostActivity.class);
+                    Intent intent = new Intent(BoardActivity.this, ReplyActivity.class);
                     intent.putExtra("idx",arr.get(position).idx);
                     intent.putExtra("postUserId",arr.get(position).userid);
                     intent.putExtra("content",arr.get(position).content);

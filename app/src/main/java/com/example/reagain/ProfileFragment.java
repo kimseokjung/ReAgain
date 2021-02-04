@@ -10,6 +10,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Environment;
@@ -19,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -61,7 +64,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     TextView mainTitle, boardCount, profileBoard;
     CircleImageView profileImg;
     ImageView modifyImg;
-    Button modify;
+    Button modify,logout;
     SwipeRefreshLayout refreshLayout;
     MyAdapter adapter;
     ProgressBar progressBar;
@@ -90,6 +93,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         modifyImg = v.findViewById(R.id.modify_plus);
         modify = v.findViewById(R.id.modify);
         progressBar = v.findViewById(R.id.progressBar_profile);
+        logout = v.findViewById(R.id.logout);
 
         refreshLayout = v.findViewById(R.id.swiperefresh);
 
@@ -114,6 +118,34 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
         adapter = new MyAdapter(getActivity());
         gv.setAdapter(adapter);
+
+        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //팝업으로 띄우기
+
+                Intent intent = new Intent(getActivity(), PostActivity.class);
+                intent.putExtra("idx",arr.get(position).idx);
+                intent.putExtra("userid",arr.get(position).userid);
+                intent.putExtra("content",arr.get(position).content);
+                intent.putExtra("logtime",arr.get(position).logtime);
+                intent.putExtra("writeuserimg",arr.get(position).writeuserimg);
+                intent.putExtra("likeCount",arr.get(position).likeCount);
+                intent.putExtra("isChecked",arr.get(position).isChecked);
+                intent.putExtra("imgPath",arr.get(position).imgPath);
+                startActivity(intent);
+            }
+        });
+       logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =
+                        new Intent(getActivity(), LoginActivity.class);
+                savePref("autoLogin", "0");
+                startActivity(intent);
+
+            }
+        });
 
 
         params.put("userid", userId);
@@ -146,7 +178,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                         obj1.optString("content"), obj1.optString("imgPath"), obj1.optString("logtime"),
                         obj1.optString("writeuserimg"), obj1.optString("likeCount"), obj1.optString("isChecked")));
             }
-
+            boardCount.setText(String.valueOf(arr.size()));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -175,36 +207,41 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_IMAGE_GELLERY&& resultCode == getActivity().RESULT_OK);
-        Log.d("profile gellery", "result OK");
-        Uri dataUri = data.getData();
+        if(requestCode == REQUEST_IMAGE_GELLERY&& resultCode == getActivity().RESULT_OK) {
+            Log.d("profile gellery", "result OK");
+            Uri dataUri = data.getData();
 
-        try {
-            // 선택한 이미지에서 비트맵 생성
-            InputStream in = getActivity().getContentResolver().openInputStream(dataUri);
-            Bitmap img = BitmapFactory.decodeStream(in);
-            in.close();
-            // 이미지 표시
-            Glide.with(getActivity())
-                    .load(img)
-                    .error(R.drawable.unimg)
-                    .circleCrop()
-                    .into(profileImg);
+            try {
+                // 선택한 이미지에서 비트맵 생성
+                InputStream in = getActivity().getContentResolver().openInputStream(dataUri);
+                Bitmap img = BitmapFactory.decodeStream(in);
+                in.close();
+                // 이미지 표시
+                Glide.with(getActivity())
+                        .load(img)
+                        .error(R.drawable.unimg)
+                        .circleCrop()
+                        .into(profileImg);
 
 //            imageView.setImageBitmap(img);
-            Log.d("aa", "사진 불러오기");
+                Log.d("aa", "사진 불러오기");
 
-            // 선택한 이미지 임시 저장
-            String date = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String strFolderName = Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES) + File.separator + "EZENSTA" + File.separator;
-            tempFile = new File(strFolderName, "PROFILE_" + date + ".jpeg");
-            OutputStream out = new FileOutputStream(tempFile);
-            img.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                // 선택한 이미지 임시 저장
+                String date = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                String strFolderName = Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES) + File.separator + "EZENSTA" + File.separator;
+                File file = new File(strFolderName);
+                if (!file.exists())
+                    file.mkdirs();
 
-            send2Server(tempFile,userId,"android_profile_img_change");
+                tempFile = new File(strFolderName, "PROFILE_" + date + ".jpeg");
+                OutputStream out = new FileOutputStream(tempFile);
+                img.compress(Bitmap.CompressFormat.JPEG, 100, out);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+                send2Server(tempFile, userId, "android_profile_img_change");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
     public void send2Server(File file, String userId, String url){

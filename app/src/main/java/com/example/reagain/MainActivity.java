@@ -33,6 +33,7 @@ public class MainActivity extends BaseActivity {
 
     Fragment menu1HomeF;
     Fragment menu2SearchF;
+    Fragment menu3ShopF;
     Fragment menu4IProfileF;
 
     Intent intent = null;
@@ -66,6 +67,7 @@ public class MainActivity extends BaseActivity {
 
         menu1HomeF = new BoardFragment();
         menu2SearchF = new SearchFragment();
+        menu3ShopF = new ShopFragment();
         menu4IProfileF = new ProfileFragment();
 
         // 하단 네비바 설정
@@ -98,6 +100,7 @@ public class MainActivity extends BaseActivity {
                         return true;
                     case R.id.navigation_shop:
                         SCR = SHOP;
+                        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment,menu3ShopF).commit();
                         return true;
                     case R.id.navigation_profile:
                         SCR = PROFILE;
