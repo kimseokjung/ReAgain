@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
@@ -67,7 +68,7 @@ public class BoardFragment extends BaseFragment implements AdapterView.OnItemCli
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View  v = inflater.inflate(R.layout.fragment_board, container, false);
+        View v = inflater.inflate(R.layout.fragment_board, container, false);
 
         Log.d("aadd", "여기를 지나는가?");
         refreshLayout = v.findViewById(R.id.swiperefresh);
@@ -128,10 +129,12 @@ public class BoardFragment extends BaseFragment implements AdapterView.OnItemCli
 
         return v;
     }
-    public void topView(View view){
-        view.scrollTo(0,0);
+
+    public void topView(View view) {
+        view.scrollTo(0, 0);
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -166,7 +169,7 @@ public class BoardFragment extends BaseFragment implements AdapterView.OnItemCli
                 progressBar.setVisibility(View.GONE);
                 mLockListView = false;
             }
-        },1000);
+        }, 1000);
     }
 
     Response.Listener<String> SuccessBoardListener = new Response.Listener<String>() {
@@ -180,7 +183,7 @@ public class BoardFragment extends BaseFragment implements AdapterView.OnItemCli
             try {
                 refreshLayout.setRefreshing(false);
                 JSONArray jsonList = new JSONArray(response);
-                Log.d("boardlist","json length : "+jsonList.length());
+                Log.d("boardlist", "json length : " + jsonList.length());
                 for (int i = 0; i < jsonList.length(); i++) {
                     JSONObject obj1 = jsonList.optJSONObject(i);
                     arr.add(new ItemData(obj1.optString("idx"), obj1.optString("userid"),
@@ -191,11 +194,11 @@ public class BoardFragment extends BaseFragment implements AdapterView.OnItemCli
                         for (int j = 0; j < replyObj.length(); j++) {
                             JSONObject replyObj2 = replyObj.optJSONObject(j);
                             reArrS.add(new ItemData(replyObj2.optString("replyIdx"), replyObj2.optString("userid"),
-                                    replyObj2.optString("content"),obj1.optString("boardIdx")));
+                                    replyObj2.optString("content"), obj1.optString("boardIdx")));
                         }
                     }
                 }
-                Log.d("boardlist","arr size : "+arr.size());
+                Log.d("boardlist", "arr size : " + arr.size());
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -219,11 +222,13 @@ public class BoardFragment extends BaseFragment implements AdapterView.OnItemCli
 
     class ItemHolder {
         TextView tvBoardWriter, tvBoardContent, tvBoardLogtime, tvLikeCount, tvBoardReply;
-        TextView tvReplyPrv1,tvReplyPrv2;
+        TextView tvReplyPrv1, tvReplyPrv2;
         ImageView imgBoardImage, icBoardLike, icBoardDots;
         CircleImageView imgBoardProfile;
     }
+
     int pos;
+
     class MyAdapter extends ArrayAdapter implements View.OnClickListener {
         LayoutInflater lnf;
 
@@ -283,23 +288,31 @@ public class BoardFragment extends BaseFragment implements AdapterView.OnItemCli
             viewHolder.tvBoardLogtime.setText(arr.get(position).logtime);
             viewHolder.tvLikeCount.setText(arr.get(position).likeCount + "명이 좋아합니다");
 
-            if(reArrS != null) {
+            if (reArrS != null) {
                 for (int i = 0; i < reArrS.size(); i++) {
                     if (arr.get(position).idx == reArrS.get(i).boardIdx)
                         viewHolder.tvReplyPrv1.setText(reArrS.get(i).content);
                 }
-            }else{
+            } else {
                 viewHolder.tvReplyPrv1.setText("");
             }
 
-            if(userId.equalsIgnoreCase(arr.get(position).userid)){
+            if (userId.equalsIgnoreCase(arr.get(position).userid)) {
                 viewHolder.icBoardDots.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 viewHolder.icBoardDots.setVisibility(View.INVISIBLE);
             }
 //            viewHolder.imgBoardImage.setText(arr.get(position).imgPath);
 //            viewHolder.icBoardLike.setText(arr.get(position).getLike());
+            viewHolder.tvBoardWriter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), GetProfileActivity.class);
+                    intent.putExtra("userid", arr.get(position).userid);
+                    startActivity(intent);
 
+                }
+            });
             viewHolder.icBoardLike.setOnClickListener(this);
             viewHolder.icBoardLike.setTag(position);
 
@@ -336,11 +349,11 @@ public class BoardFragment extends BaseFragment implements AdapterView.OnItemCli
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), ReplyActivity.class);
-                    intent.putExtra("idx",arr.get(position).idx);
-                    intent.putExtra("postUserId",arr.get(position).userid);
-                    intent.putExtra("content",arr.get(position).content);
-                    intent.putExtra("writeUserImg",arr.get(position).writeuserimg);
-                    intent.putExtra("loginUser",userId);
+                    intent.putExtra("idx", arr.get(position).idx);
+                    intent.putExtra("postUserId", arr.get(position).userid);
+                    intent.putExtra("content", arr.get(position).content);
+                    intent.putExtra("writeUserImg", arr.get(position).writeuserimg);
+                    intent.putExtra("loginUser", userId);
                     startActivity(intent);
                 }
             });
@@ -349,15 +362,15 @@ public class BoardFragment extends BaseFragment implements AdapterView.OnItemCli
                 @Override
                 public void onClick(View v) {
                     PopupMenu popupMenu = new PopupMenu(getActivity(), v);
-                    popupMenu.getMenuInflater().inflate(R.menu.board_menu,popupMenu.getMenu());
+                    popupMenu.getMenuInflater().inflate(R.menu.board_menu, popupMenu.getMenu());
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            switch (item.getItemId()){
-                                case R.id.menu1 :
+                            switch (item.getItemId()) {
+                                case R.id.menu1:
                                     showToast("수정이다!!");
                                     break;
-                                case R.id.menu2 :
+                                case R.id.menu2:
                                     showToast("삭제다!!");
                                     params.clear();
                                     params.put("idx", arr.get(position).idx);
@@ -391,20 +404,20 @@ public class BoardFragment extends BaseFragment implements AdapterView.OnItemCli
         try {
             JSONObject jsonObject = new JSONObject(response);
             String code = jsonObject.getString("code");
-            if(code.equalsIgnoreCase("505")){
+            if (code.equalsIgnoreCase("505")) {
                 arr.clear();
                 pg = 1;
                 boardRequest(pg);
-            }else {
+            } else {
                 String likeCount = jsonObject.optString("likeCount");
                 int likeCheck = Integer.parseInt(jsonObject.optString("isChecked"));
-                String isChecked = String.valueOf(likeCheck==0?1:0);
-                Log.d("aa",isChecked);
+                String isChecked = String.valueOf(likeCheck == 0 ? 1 : 0);
+                Log.d("aa", isChecked);
 
                 arr.get(pos).likeCount = likeCount;
                 arr.get(pos).isChecked = isChecked;
             }
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         adapter.notifyDataSetChanged();

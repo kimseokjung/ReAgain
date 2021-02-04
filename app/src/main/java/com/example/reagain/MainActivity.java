@@ -1,25 +1,15 @@
 package com.example.reagain;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import java.util.List;
 
@@ -91,7 +81,7 @@ public class MainActivity extends BaseActivity {
                     case R.id.navigation_search:
                         SCR = SEARCH;
 //                        new SearchFragment(list);
-                        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment,menu2SearchF).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,menu2SearchF).commit();
                         return true;
                     case R.id.navigation_insert:
                         SCR = INSERT;
@@ -100,7 +90,7 @@ public class MainActivity extends BaseActivity {
                         return true;
                     case R.id.navigation_shop:
                         SCR = SHOP;
-                        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment,menu3ShopF).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,menu3ShopF).commit();
                         return true;
                     case R.id.navigation_profile:
                         SCR = PROFILE;
@@ -114,6 +104,11 @@ public class MainActivity extends BaseActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         intent = new Intent(this, com.example.reagain.InsertActivity.class);
 
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
     @Override

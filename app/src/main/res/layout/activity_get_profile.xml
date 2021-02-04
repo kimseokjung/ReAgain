@@ -4,53 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context=".ProfileFragment">
+    tools:context=".GetProfileActivity">
 
-
-    <!-- TODO: Update blank fragment layout -->
-    <RelativeLayout
-        android:id="@+id/top_main"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true">
-
-        <TextView
-            android:id="@+id/main_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:gravity="center"
-            android:text="UserId"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/logout"
-            android:layout_width="70dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="11dp"
-            android:gravity="center"
-            android:padding="0dp"
-            android:text="로그아웃"
-            android:textSize="14dp"
-            android:textStyle="bold" />
-    </RelativeLayout>
 
 
     <RelativeLayout
         android:id="@+id/main_lay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:id="@+id/haeder"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <ImageView
+                android:id="@+id/back_img"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_left_arrow"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/top_main2"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:layout_marginTop="50dp">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/haeder">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_img"
@@ -64,17 +45,37 @@
                 android:id="@+id/modify_plus"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginLeft="63dp"
-                android:layout_marginTop="63dp"
+                android:layout_alignRight="@+id/profile_img"
+                android:layout_alignBottom="@+id/profile_img"
+                android:layout_marginBottom="-10dp"
                 android:src="@drawable/ic_plus_1" />
+
+            <TextView
+                android:id="@+id/main_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="5dp"
+
+                android:text="userid"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/profile_img"/>
+
+            <RelativeLayout
+                android:id="@+id/board1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/main_title"
+                android:layout_alignLeft="@+id/main_title"
+                android:layout_marginTop="5dp"
+                >
 
             <RelativeLayout
                 android:id="@+id/board"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="35dp"
-                android:layout_toRightOf="@+id/profile_img">
+                android:layout_centerVertical="true">
 
                 <TextView
                     android:id="@+id/board_count"
@@ -154,15 +155,32 @@
                     android:text="팔로워"
                     android:textSize="14sp" />
             </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/container_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/top_main2">
+
+            <TextView
+                android:id="@+id/main_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:text="남긴말... 추 후 업뎃예정"
+                android:textSize="18sp"/>
 
         </RelativeLayout>
 
 
         <Button
-            android:id="@+id/modify"
+            android:id="@+id/follow"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_below="@+id/top_main2"
+            android:layout_below="@+id/container_profile"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="12dp"
             android:layout_marginRight="20dp"
@@ -170,7 +188,7 @@
             android:background="@drawable/button_style"
             android:gravity="center"
             android:padding="0dp"
-            android:text="프로필 수정"
+            android:text="팔로우"
             android:textSize="15dp"
             android:textStyle="bold" />
 
@@ -178,7 +196,7 @@
             android:id="@+id/border1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/modify"
+            android:layout_below="@+id/follow"
             android:background="#dfdfdf" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -197,13 +215,13 @@
 
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-                <ProgressBar
-                    android:id="@+id/progressBar_profile"
-                    style="?android:attr/progressBarStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:visibility="gone"/>
+        <ProgressBar
+            android:id="@+id/progressBar_profile"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 </FrameLayout>

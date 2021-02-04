@@ -1,5 +1,9 @@
 package com.example.reagain;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -7,10 +11,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
@@ -51,8 +51,7 @@ import okhttp3.Response;
 
 import static android.os.Environment.DIRECTORY_PICTURES;
 
-
-public class ProfileFragment extends BaseFragment implements View.OnClickListener, AbsListView.OnScrollListener {
+public class GetProfileActivity extends BaseActivity implements View.OnClickListener, AbsListView.OnScrollListener {
     ArrayList<ItemData> arr = new ArrayList<>();
     ArrayList<ItemData> subArr = new ArrayList<>();
 
@@ -63,7 +62,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     TextView tvFollowing, tvFollower, boardCount;
     CircleImageView profileImg;
     ImageView modifyImg;
-    Button modify, logout;
+    Button follow;
     SwipeRefreshLayout refreshLayout;
     MyAdapter adapter;
     ProgressBar progressBar;
@@ -75,46 +74,52 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     int IDX = 21;// 몇개씩 불러올 것인가?
     int isLAST = -1; // 0 리스트의 끝인가 -1 초기값 1이면 최대크기
 
+    int isFollow = -1; // 팔로우 했니 안했니
+
     String userId = "";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_profile, container, false);
-        mainTitle = v.findViewById(R.id.main_title);
-        boardCount = v.findViewById(R.id.board_count);
-        profileBoard = v.findViewById(R.id.profile_board);
-        profileImg = v.findViewById(R.id.profile_img);
-        modifyImg = v.findViewById(R.id.modify_plus);
-        modify = v.findViewById(R.id.modify);
-        progressBar = v.findViewById(R.id.progressBar_profile);
-        logout = v.findViewById(R.id.logout);
-        tvFollowing = v.findViewById(R.id.board_following);
-        tvFollower = v.findViewById(R.id.board_follower);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_get_profile);
 
-        refreshLayout = v.findViewById(R.id.swiperefresh);
+        mainTitle = findViewById(R.id.main_title);
+        boardCount = findViewById(R.id.board_count);
+        profileBoard = findViewById(R.id.profile_board);
+        profileImg = findViewById(R.id.profile_img);
+        modifyImg = findViewById(R.id.modify_plus);
+        follow = findViewById(R.id.follow);
+        progressBar = findViewById(R.id.progressBar_profile);
+        tvFollowing = findViewById(R.id.board_following);
+        tvFollower = findViewById(R.id.board_follower);
+
+        refreshLayout = findViewById(R.id.swiperefresh);
 
         arr.clear();
         subArr.clear();
         OFFSET = 0;
 
-        userId = getData("userid");
+        userId = getIntent().getStringExtra("userid");
+        if(userId.equalsIgnoreCase(getData("userid"))){
+            follow.setText("프로필 수정");
+        }else {
+            modifyImg.setVisibility(View.GONE);
+        }
         mainTitle.setText(userId);
         String profilUrl = "http://172.30.1.42:8081/insta/profile_img/" + getData("profileImg");
         Log.d("aa", "" + profilUrl);
-        Glide.with(getActivity())
+        Glide.with(this)
                 .load(profilUrl)
                 .error(R.drawable.unimg)
                 .circleCrop()
                 .into(profileImg);
 
 
-        gv = v.findViewById(R.id.gridview);
+        gv = findViewById(R.id.gridview);
         gv.setExpanded(true);
         gv.setOnScrollListener(this);
 
-        adapter = new MyAdapter(getActivity());
+        adapter = new MyAdapter(this);
         gv.setAdapter(adapter);
 
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -122,7 +127,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //팝업으로 띄우기
 
-                Intent intent = new Intent(getActivity(), PostActivity.class);
+                Intent intent = new Intent(GetProfileActivity.this, PostActivity.class);
                 intent.putExtra("idx", arr.get(position).idx);
                 intent.putExtra("userid", arr.get(position).userid);
                 intent.putExtra("content", arr.get(position).content);
@@ -134,17 +139,6 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                 startActivity(intent);
             }
         });
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =
-                        new Intent(getActivity(), LoginActivity.class);
-                savePref("autoLogin", "0");
-                startActivity(intent);
-
-            }
-        });
-
 
         params.put("userid", userId);
         request("android_profile_list");
@@ -162,10 +156,9 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             }
         });
         modifyImg.setOnClickListener(this);
-        modify.setOnClickListener(this);
-
-        return v;
+        follow.setOnClickListener(this);
     }
+
 
     @Override
     public void response(String response) {
@@ -178,11 +171,11 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                 Log.d("follow", response);
                 JSONArray followList = object.optJSONArray("list");
                 tvFollowing.setText(String.valueOf(followList.length()));
-            }else if (code.equalsIgnoreCase("601")){
+            } else if (code.equalsIgnoreCase("601")) {
                 Log.d("follow", response);
                 JSONArray followList = object.optJSONArray("list");
                 tvFollower.setText(String.valueOf(followList.length()));
-            } else if(code.equalsIgnoreCase("700")) {
+            } else if (code.equalsIgnoreCase("700")) {
                 //프로파일 리스트에서 복귀
                 refreshLayout.setRefreshing(false);
                 JSONArray jsonList = object.optJSONArray("list");
@@ -194,6 +187,23 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                 }
                 boardCount.setText(String.valueOf(arr.size()));
                 getItem();
+            } else if (code.equalsIgnoreCase("400")) {
+                String followObj = object.optString("result");
+                if (followObj.equalsIgnoreCase("OK")) {
+                    isFollow = 0;
+                    follow.setText("언팔로우");
+                } else {
+
+                }
+
+            } else if (code.equalsIgnoreCase("401")) {
+                String followObj = object.optString("result");
+                if (followObj.equalsIgnoreCase("OK")) {
+                    isFollow = -1;
+                    follow.setText("팔로우");
+                } else {
+
+                }
             }
 
         } catch (JSONException e) {
@@ -213,9 +223,21 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                 intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
                 startActivityForResult(intent, REQUEST_IMAGE_GELLERY);
                 break;
-            case R.id.modify:
-                startActivity(new Intent(getActivity(), com.example.reagain.ProfileModiActivity.class));
+            case R.id.follow:
                 Log.d("aa", "누질렸다");
+                params.clear();
+                params.put("target", userId);
+                params.put("userid", getData("userid"));
+                if(userId.equalsIgnoreCase(getData("userid"))){
+                    startActivity(new Intent(this, com.example.reagain.ProfileModiActivity.class));
+                }else {
+                    if (isFollow == -1) {
+                        request("android_follow_insert");
+                    } else {
+                        request("android_follow_delete");
+                    }
+                }
+
                 break;
         }
     }
@@ -223,17 +245,17 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_GELLERY && resultCode == getActivity().RESULT_OK) {
+        if (requestCode == REQUEST_IMAGE_GELLERY && resultCode == RESULT_OK) {
             Log.d("profile gellery", "result OK");
             Uri dataUri = data.getData();
 
             try {
                 // 선택한 이미지에서 비트맵 생성
-                InputStream in = getActivity().getContentResolver().openInputStream(dataUri);
+                InputStream in = getContentResolver().openInputStream(dataUri);
                 Bitmap img = BitmapFactory.decodeStream(in);
                 in.close();
                 // 이미지 표시
-                Glide.with(getActivity())
+                Glide.with(this)
                         .load(img)
                         .error(R.drawable.unimg)
                         .circleCrop()
@@ -415,14 +437,14 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
                 convertView.setTag(viewHolder);
             } else {
-                viewHolder = (ProfileFragment.ItemHolder) convertView.getTag();
+                viewHolder = (ItemHolder) convertView.getTag();
             }
             String mainImg = subArr.get(position).imgPath;
             String imglUrl = "http://172.30.1.42:8081/insta/storage/" + mainImg;
 
             viewHolder.ivGridHolder.setImageResource(R.drawable.unimg);
             Log.d("aa", "dddd  " + imglUrl);
-            Glide.with(getActivity())
+            Glide.with(GetProfileActivity.this)
                     .load(imglUrl)
                     .error(R.drawable.no_image)
                     .into(viewHolder.ivGridHolder);

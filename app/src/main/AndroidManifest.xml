@@ -25,7 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ReAgain"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PostActivity"></activity>
+        <activity android:name=".GetProfileActivity"></activity>
+        <activity android:name=".PostActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -40,19 +41,26 @@
 
         <activity
             android:name=".MapsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".ProfileModiActivity" />
-        <activity android:name=".SearchAddress" />
-        <activity android:name=".InsertActivity" />
+        <activity android:name=".ProfileModiActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SearchAddress"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".InsertActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustNothing"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ReplyActivity"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".BoardActivity"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"/>
         <activity android:name=".BaseActivity" />
 
         <uses-library
@@ -60,7 +68,8 @@
             android:required="false" />
 
         <activity android:name=".JoinActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
