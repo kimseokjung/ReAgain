@@ -95,6 +95,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         progressBar = v.findViewById(R.id.progressBar_profile);
         logout = v.findViewById(R.id.logout);
 
+
         refreshLayout = v.findViewById(R.id.swiperefresh);
 
         arr.clear();
